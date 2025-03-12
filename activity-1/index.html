@@ -1,0 +1,85 @@
+<!-- Kristine Joy Barrina || BSCPE 3-6 -->
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUP Hymn</title>
+    <link rel="icon" href="/activity-1/files/PUPLogo.png" type="image/x-icon">
+</head>
+<body style="background-color: #800000; font-family: 'sans-serif'; margin: 0; padding: 0; background: url('/activity-1/files/pupBg.png') no-repeat center center fixed;">
+    <header style="background-color: #ffffff; display:flex; align-items:start; gap: 32px; padding: 16px;">
+        <img src="/activity-1/files/PUPLogo.png" alt="This is a PUP Logo" width="88" height="88">
+        <h1 style="color: #800000;">Polytechnic University of the Philippines</h1>
+    </header>
+    <main style="display: flex; justify-content: center; align-items: center; flex-grow: 1; padding: 96px;">
+        <div style="background-color: white; color: #800000; padding: 16px; height: 500px; width: 800px; border-radius: 16px; text-align: center;">
+            <h1 style="margin: 8px;">PUP Hymn</h1>
+            <div id="lyrics-container" style="color: #000; height: 300px; overflow: hidden; position: relative; text-align: center;">
+                <div id="lyrics" style="font-size: 32px; position: absolute; top: 0; width: 100%;">
+                    <p>
+                        Sintang Paaralan<br>
+                        Tanglaw ka ng bayan<br>
+                        Pandayan ng isip ng kabataan<br>
+                        Kami ay dumating nang salat sa yaman<br>
+                        Hanap na dunong ay iyong alay<br>
+                        Ang layunin mong makatao<br>
+                        Dinarangal ang Pilipino<br>
+                        Ang iyong aral, diwa, adhikang taglay<br>
+                        PUP, aming gabay<br>
+                        Paaralang dakila<br>
+                        PUP, pinagpala<br>
+                        Gagamitin ang karunungan<br>
+                        Mula sa iyo, para sa bayan<br>
+                        Ang iyong aral, diwa, adhikang taglay<br>
+                        PUP, aming gabay<br>
+                        Paaralang dakila<br>
+                        PUP, pinagpala<br>
+                    </p>
+                </div>
+            </div>
+            <audio id="puphymnAudio" controls autoplay style="width: 700px; padding: 16px;">
+                <source src="/activity-1/files/puphymn.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <div style="display: flex; justify-content: center; gap: 16px; margin-top: 10px;">
+                <button id="rewindBtn" style="font-size: 20px; padding: 10px 20px; background-color:#800000; color:#ffffff; border: none; border-radius: 8px;"><< Rewind</button>
+                <button id="forwardBtn" style="font-size: 20px; padding: 10px 20px; background-color:#800000; color:#ffffff; border: none; border-radius: 8px;">Forward >></button>
+            </div>
+        </div>
+    </main>
+    <footer style="text-align: center; color:#800000; background-color:#ffffff; padding: 10px;">
+        <p>Copyright &copy; 2017 | Polytechnic University of the Philippines</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const lyricsContainer = document.getElementById("lyrics-container");
+            const lyrics = document.getElementById("lyrics");
+            const audio = document.getElementById("puphymnAudio");
+            function scrollLyrics() {
+                if (!audio.duration) return;
+                let duration = audio.duration;
+                let currentTime = audio.currentTime;
+                let maxScroll = lyrics.scrollHeight - lyricsContainer.clientHeight;
+                let scrollPosition = (currentTime / duration) * maxScroll;
+                lyrics.style.transition = "transform 0.5s linear";
+                lyrics.style.transform = `translateY(-${scrollPosition}px)`;
+            }
+            audio.addEventListener("timeupdate", scrollLyrics);
+            audio.addEventListener("seeked", scrollLyrics);
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("puphymnAudio");
+            const rewindBtn = document.getElementById("rewindBtn");
+            const forwardBtn = document.getElementById("forwardBtn");
+            rewindBtn.addEventListener("click", function () {
+                audio.currentTime = Math.max(0, audio.currentTime - 10);
+            });
+            forwardBtn.addEventListener("click", function () {
+                audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+            });
+        });
+    </script>
+</body>
+</html>
